@@ -29,7 +29,7 @@ class Connection
     {
         if (self::$connection === null) {
             try {
-                $connection = mysqli_connect('mysql', 'root', 'root', 'quizz');
+                $connection = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB);
             } catch (\Throwable $e) {
                 echo $e->getMessage();
                 $connection = false;
