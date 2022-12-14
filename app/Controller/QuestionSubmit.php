@@ -8,6 +8,14 @@ use App\Model\Answers\Model as AnswersModel;
 
 class QuestionSubmit implements ControllerInterface
 {
+    /**
+     * A POST action to verify if selected answer is correct.
+     *
+     * Write down into the session result for the question.
+     * Redirect to the next question.
+     *
+     * @return void
+     */
     public function execute(): void
     {
         $answers = new AnswersModel();

@@ -14,7 +14,18 @@ class Model
      */
     public function getQuestion(int $questionId): ?array
     {
-        $query = sprintf('SELECT * FROM questions WHERE id = %s', $questionId);
+        $query = sprintf(/** @lang MySQL */ 'SELECT * FROM questions WHERE id = %s', $questionId);
         return Connection::getConnection()->query($query)->fetch_assoc();
+    }
+
+    /**
+     * Get total number of questions.
+     *
+     * @return int
+     */
+    public function getTotal(): int
+    {
+        $query = /** @lang MySQL */ 'SELECT COUNT(*) FROM questions';
+        return (int) Connection::getConnection()->query($query)->fetch_column();
     }
 }
