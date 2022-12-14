@@ -16,8 +16,12 @@
         border-width: 3px;
     }
 
-    .chosen {
-        background-color: gold;
+    .correct-answer {
+        background-color: green;
+    }
+
+    .incorrect-answer {
+        background-color: red;
     }
 </style>
 <?php
@@ -28,7 +32,16 @@ $questions = new Model();
 ?>
 
 <?php for ($i = 1; $i <= $questions->getTotal(); $i++) : ?>
-    <a class="element <?php if (isset($_SESSION['answers'][$i])) : ?>chosen<?php endif; ?> <?php if ($i == $_GET['question_id']) : ?>current-question<?php endif; ?>" href="/question?question_id=<?= $i ?>">
+    <a class="element
+        <?php if ($i == $_GET['question_id']) : ?>current-question<?php endif; ?>
+        <?php if (isset($_SESSION['answers'][$i])) : ?>
+            <?php if ($_SESSION['answers'][$i]) : ?>
+                correct-answer
+            <?php else : ?>
+                incorrect-answer
+            <?php endif; ?>
+        <?php endif; ?>
+    " href="/question?question_id=<?= $i ?>">
         <?= $i ?>
     </a>
 <?php endfor; ?>
