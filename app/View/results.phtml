@@ -1,6 +1,8 @@
 <?php /** @var string[] $results */ ?>
+<?php include ('head.phtml'); ?>
 <h1>Your result is: </h1>
 <?php foreach ($results as $id => $question) : ?>
     <p style="color: <?= $question ? 'green' : 'red' ?>;"><a href="/question?question_id=<?= $id ?>"><?= $id ?></a> - <?= $question ? 'correct' : 'incorrect' ?></p>
 <?php endforeach; ?>
 <a href="/question?question_id=1">Follow to the first question</a>
+<?php include ('footer.phtml'); ?>

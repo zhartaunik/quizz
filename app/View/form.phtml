@@ -6,13 +6,8 @@ use App\Model\Answers\Model;
 
 $answers = new Model();
 ?>
-<html lang="en_US">
-
-<head>
-    <title>Quiz</title>
-</head>
-<body>
-<div>
+<?php include ('head.phtml'); ?>
+<?php include ('progress.phtml'); ?>
 <form method="POST" action="/questionSubmit">
     <h1><?= $question['question_title'] ?></h1>
     <br />
@@ -30,6 +25,4 @@ $answers = new Model();
     <br /><br />
     <input type="submit" value="Submit" />
 </form>
-</div>
-</body>
-</html>
+<?php include ('footer.phtml'); ?>

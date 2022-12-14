@@ -1,0 +1,29 @@
+<style>
+    .element {
+        display: block;
+        width: 30px;
+        height: 20px;
+        border: 1px solid black;
+        padding: 3px;
+        margin: 3px;
+        text-align: center;
+        float: left;
+    }
+
+    .chosen {
+        background-color: gold;
+    }
+</style>
+<?php
+
+use App\Model\Question\Model;
+
+$questions = new Model();
+?>
+
+<?php for ($i = 1; $i <= $questions->getTotal(); $i++) : ?>
+    <a class="element <?php if (isset($_SESSION['answers'][$i])) : ?>chosen<?php endif; ?>" href="/question?question_id=<?= $i ?>">
+        <?= $i ?>
+    </a>
+<?php endfor; ?>
+<div style="clear: both;"></div>
