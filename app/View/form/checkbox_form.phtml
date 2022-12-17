@@ -1,0 +1,22 @@
+<?php
+use App\Model\Answers\Model;
+
+/** @var string[] $question  */
+
+$answers = new Model();
+?>
+<form method="POST" action="/questionMultipleSubmit">
+    <h1><?= $question['question_title'] ?></h1>
+    <br />
+    <br />
+    <?php foreach ($answers->getAnswers((int) $question['id']) as $answer) : ?>
+        <label>
+            <input type="checkbox" name="answer_id[<?= $answer['id']; ?>]" value="<?= $answer['id'] ?>">
+            <pre><p><?= $answer['answer_text'] ?></p></pre>
+        </label>
+        <br />
+    <?php endforeach; ?>
+    <input type="hidden" name="question_id" value="<?= $_GET['question_id'] ?>" />
+    <br /><br />
+    <input type="submit" value="Submit" />
+</form>

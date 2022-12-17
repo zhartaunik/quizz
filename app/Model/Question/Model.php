@@ -6,7 +6,7 @@ namespace App\Model\Question;
 
 use App\Model\Db\Connection;
 
-class Model
+class Model implements QuestionInterface
 {
     /**
      * @param int $questionId

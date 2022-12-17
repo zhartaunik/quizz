@@ -6,16 +6,16 @@ namespace App\Model\Answers;
 
 use App\Model\Db\Connection;
 
-class Model
+class Model implements AnswersInterface
 {
     /**
      * Get all answers for the desired question.
      *
+     * @param int $questionId
      * @return array|null
      */
-    public function getAnswers(): ?array
+    public function getAnswers(int $questionId): ?array
     {
-        $questionId = $_GET['question_id'];
         $query = sprintf(/** @lang MySQL */ 'SELECT * FROM answers WHERE question_id = %s', $questionId);
         $answers = Connection::getConnection()->query($query)->fetch_all(MYSQLI_ASSOC);
         shuffle($answers);
@@ -23,15 +23,14 @@ class Model
     }
 
     /**
-     * Check if selected answer is correct.
+     * Verify if number of correct answers is more than one.
      *
-     * @param int $answerId
+     * @param int $questionId
      * @return bool
      */
-    public function verify(int $answerId): bool
+    public function isMultipleValid(int $questionId): bool
     {
-        $query = sprintf(/** @lang MySQL */ 'SELECT is_correct FROM answers WHERE id = %s', $answerId);
-        $mysqliResult = Connection::getConnection()->query($query);
-        return (bool) $mysqliResult->fetch_column();
+        $allAnswers = $this->getAnswers($questionId);
+        return array_sum(array_column($allAnswers, 'is_correct')) > 1;
     }
 }

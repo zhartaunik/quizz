@@ -1,29 +1,12 @@
 <?php
-
-use App\Model\Answers\Model;
-
-/** @var string[] $question  */
-
-$answers = new Model();
+/** @var bool $isMultiple  */
 ?>
 <?php include ('head.phtml'); ?>
 <?php include ('progress.phtml'); ?>
 <?php include ('results_link.phtml'); ?>
-<form method="POST" action="/questionSubmit">
-    <h1><?= $question['question_title'] ?></h1>
-    <br />
-    <br />
-
-    <?php foreach ($answers->getAnswers() as $answer) : ?>
-        <label>
-            <input type="radio" name="answer_id" value="<?= $answer['id'] ?>">
-            <pre><p><?= $answer['answer_text'] ?></p></pre>
-        </label>
-        <br />
-    <?php endforeach; ?>
-
-    <input type="hidden" name="question_id" value="<?= $_GET['question_id'] ?>" />
-    <br /><br />
-    <input type="submit" value="Submit" />
-</form>
+<?php if ($isMultiple) : ?>
+    <?php include ('form/checkbox_form.phtml'); ?>
+<?php else : ?>
+    <?php include ('form/radio_form.phtml'); ?>
+<?php endif; ?>
 <?php include ('footer.phtml'); ?>

@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Model\Answers\Model as AnswersModel;
 
-class QuestionSubmit implements ControllerInterface
+class QuestionMultipleSubmit implements ControllerInterface
 {
     /**
      * A POST action to verify if selected answer is correct.
@@ -21,7 +21,16 @@ class QuestionSubmit implements ControllerInterface
         $answers = new AnswersModel();
         $allAnswers = $answers->getAnswers((int) $_POST['question_id']);
         $answersToCompare = array_column($allAnswers, 'is_correct', 'id');
-        $_SESSION['answers'][$_POST['question_id']] = ($answersToCompare[$_POST['answer_id']] == 1);
+        $onlyCorrectAnswers = [];
+        foreach ($answersToCompare as $key => $answer) {
+            if ($answer == 1) {
+                $onlyCorrectAnswers[] = $key;
+            }
+        }
+        $postedAnswers = array_keys($_POST['answer_id']);
+        sort($onlyCorrectAnswers);
+        sort($postedAnswers);
+        $_SESSION['answers'][$_POST['question_id']] = $onlyCorrectAnswers == $postedAnswers;
         header(sprintf("Location: /question?question_id=%s", $_POST['question_id'] + 1));
     }
 }
